@@ -1,6 +1,6 @@
-# Stratified Client Selection Scheme in Federated Learning
+# Variance-Reduced Heterogeneous Federated Learning via Stratified Client Selection
 
-A PyTorch implementation of our IJCAI-22 paper [Stratified Client Selection Scheme in Federated Learning]().
+A PyTorch implementation of our paper [Variance-Reduced Heterogeneous Federated Learning via Stratified Client Selection]().
 
 ## Dependencies
 + Python (>=3.6)
@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 ## Running an experiment
 
-Here we provide the implementation of Stratified Client Selection Scheme along with MNIST, FMNIST and CIFAR-10 dataset. Running an experiment requires to use `main_mnist.py`, `main_fmnist.py` or `main_cifar10.py`. This code takes as input:
+Here we provide the implementation of Stratified Client Selection Scheme along with MNIST, FMNIST and CIFAR-10 dataset. This code takes as input:
 
 - The `dataset` used.
 - The data `partition` method used. partition ∈ { iid, dir_{alpha}, shard }
@@ -31,6 +31,59 @@ Here we provide the implementation of Stratified Client Selection Scheme along w
 - The local loss function regularization parameter `mu`. FedProx with µ = 0 and without systems heterogeneity (no stragglers) corresponds to FedAvg.
 - The `seed` used to initialize the training model. We use 0 in all our experiments.
 - Force a boolean equal `force` to True when a simulation has already been run but needs to be rerun.
+
+
++ To train and evaluate on MNIST:
+```
+python main_mnist.py --dataset=MNIST \
+    --partition=iid \
+    --sampling=random \
+    --sample_ratio=0.1 \
+    --lr=0.01 \
+    --batch_size=50 \
+    --n_SGD=50 \
+    --n_iter=200 \
+    --strata_num=10 \
+    --decay=1.0 \
+    --mu=0.0 \
+    --seed=0 \
+    --force=False
+```
+
++ To train and evaluate on FMNIST:
+```
+python main_fmnist.py --dataset=FMNIST \
+    --partition=shard \
+    --sampling=importance \
+    --sample_ratio=0.1 \
+    --lr=0.01 \
+    --batch_size=50 \
+    --n_SGD=50 \
+    --n_iter=200 \
+    --strata_num=10 \
+    --decay=1.0 \
+    --mu=0.0 \
+    --seed=0 \
+    --force=False
+```
+
++ To train and evaluate on CIFAR-10:
+```
+python main_cifar10.py --dataset=CIFAR10 \
+    --partition=dir_0.001 \
+    --sampling=ours \
+    --sample_ratio=0.1 \
+    --lr=0.05 \
+    --batch_size=50 \
+    --n_SGD=80 \
+    --n_iter=800 \
+    --strata_num=10 \
+    --decay=1.0 \
+    --mu=0.0 \
+    --seed=0 \
+    --force=False
+```
+
 
 Every experiment saves by default the training loss, the testing accuracy, and the sampled clients at every iteration in the folder `saved_exp_info`. The global model and local models histories can also be saved.
 
