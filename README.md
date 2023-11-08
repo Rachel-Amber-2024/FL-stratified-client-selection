@@ -1,6 +1,6 @@
-# Variance-Reduced Heterogeneous Federated Learning via Stratified Client Selection
+# FedSTS: A Stratified Client Selection Framework for Consistently Fast Federated Learning
 
-A PyTorch implementation of our paper [Variance-Reduced Heterogeneous Federated Learning via Stratified Client Selection]().
+A PyTorch implementation of our paper FedSTS: A Stratified Client Selection Framework for Consistently Fast Federated Learning.
 
 ## Dependencies
 + Python (>=3.6)
